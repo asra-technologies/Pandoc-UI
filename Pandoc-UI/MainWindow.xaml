@@ -9,6 +9,7 @@
     <Grid Margin="20,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="22"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -25,13 +26,18 @@
         <!--Switch text box for file pickers and remove the set button-->
         
         <Label Grid.Row="0" Grid.Column="0"  Content="Input file"></Label>
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="InputFile"/>
-        <Button Grid.Row="1" Grid.Column="2" Content="Set input" Click="SetInputFile"/>
+        <TextBox Grid.Row="2" Grid.Column="0" x:Name="InputFile"/>
+        <Button Grid.Row="2" Grid.Column="2" Content="Set input" Click="SetInputFile"/>
 
         <Label Grid.Row="0" Grid.Column="4"  Content="Output file"></Label>
-        <Label Grid.Row="0" Grid.Column="6" Content="Output format"/>
+        <!--<Label Grid.Row="0" Grid.Column="6" Content="Output format"/>-->
         <!--Drop down menu-->
-        <TextBox Grid.Row="1" Grid.Column="4" x:Name="OutputFile"/>
-        <Button Grid.Row="1" Grid.Column="6" Content="Set output" Click="SetOutputFile"/>
+        <ComboBox Grid.Row="0" Grid.Column="6" SelectedIndex="0" SelectionChanged="SaveFormatChange">
+            <ComboBoxItem Content="Pdf"/>
+            <ComboBoxItem Content="Word"/>
+            <ComboBoxItem Content="Html"/>
+        </ComboBox>
+        <TextBox Grid.Row="2" Grid.Column="4" x:Name="OutputFile"/>
+        <Button Grid.Row="2" Grid.Column="6" Content="Set output" Click="SetOutputFile"/>
     </Grid>
 </Window>
