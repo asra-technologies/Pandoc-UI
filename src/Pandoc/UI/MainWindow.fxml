@@ -17,12 +17,12 @@
     </padding>
 
     <Label text="Input File" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-    <TextField GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="inputFile" GridPane.columnIndex="0" GridPane.rowIndex="1" editable="false"/>
     <Button onAction="#setInputFile" text="Set input" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <Label text="Output file" GridPane.columnIndex="2" GridPane.rowIndex="0" />
 
-    <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
+    <TextField fx:id="outputFile" GridPane.columnIndex="2" GridPane.rowIndex="1" editable="false"/>
     <Button onAction="#setOutputFile" text="Set output" GridPane.columnIndex="3" GridPane.rowIndex="1" />
     <ComboBox promptText="Select output format" GridPane.columnIndex="3">
         <items>
@@ -36,6 +36,11 @@
             <String fx:value="Pdf" />
         </value>
     </ComboBox>
+
+    <GridPane alignment="center" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
+        <Button fx:id="convertButton" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Convert" visible="false" onAction="#convertDocument"/>
+    </GridPane>
+
     <columnConstraints>
         <ColumnConstraints percentWidth="25.0" />
         <ColumnConstraints prefWidth="64.0" />
@@ -46,5 +51,6 @@
         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" />
         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="25.0" />
         <RowConstraints />
+        <RowConstraints percentHeight="80"/>
     </rowConstraints>
 </GridPane>

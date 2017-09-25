@@ -5,13 +5,16 @@ import javafx.fxml.FXML;
 
 import java.io.File;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import java.awt.*;
+import java.awt.Desktop;
+import Pandoc.Native.Operations;
 
 public class Controller {
     private Desktop desktop = Desktop.getDesktop();
@@ -19,11 +22,25 @@ public class Controller {
     final FileChooser fileChooser = new FileChooser();
 
     @FXML
+    private TextField inputFile;
+    @FXML
+    private TextField outputFile;
+    private boolean inputSet = false;
+    private boolean outputSet = false;
+
+    @FXML
+    private Button convertButton;
+
+    @FXML
     protected void setInputFile(ActionEvent event) {
         configureFileChooserInput(fileChooser);
         File file = fileChooser.showOpenDialog(Main.stage);
         if (file != null) {
-            openFile(file);
+            inputFile.setText(file.getPath());
+            inputSet = true;
+            if (outputSet) {
+                convertButton.setVisible(true);
+            }
         }
     }
 
@@ -32,19 +49,17 @@ public class Controller {
         configureFileChooserSaveFormat(fileChooser);
         File file = fileChooser.showSaveDialog(Main.stage);
         if (file != null) {
-            openFile(file);
+            outputFile.setText(file.getPath());
+            outputSet = true;
+            if (inputSet) {
+                convertButton.setVisible(true);
+            }
         }
     }
 
-    private void openFile(File file) {
-        try {
-            desktop.open(file);
-        } catch (IOException ex) {
-            Logger.getLogger(
-                    Controller.class.getName()).log(
-                    Level.SEVERE, null, ex
-            );
-        }
+    @FXML
+    protected void convertDocument(ActionEvent event) {
+        Operations.setFileLocations(inputFile.getText(), outputFile.getText());
     }
 
     private static void configureFileChooserSaveFormat(final FileChooser fileChooser) {
