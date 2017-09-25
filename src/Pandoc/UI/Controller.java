@@ -2,7 +2,6 @@ package Pandoc.UI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -21,6 +20,7 @@ public class Controller {
 
     @FXML
     protected void setInputFile(ActionEvent event) {
+        configureFileChooserInput(fileChooser);
         File file = fileChooser.showOpenDialog(Main.stage);
         if (file != null) {
             openFile(file);
@@ -29,6 +29,7 @@ public class Controller {
 
     @FXML
     protected void setOutputFile(ActionEvent event) {
+        configureFileChooserSaveFormat(fileChooser);
         File file = fileChooser.showSaveDialog(Main.stage);
         if (file != null) {
             openFile(file);
@@ -46,13 +47,21 @@ public class Controller {
         }
     }
 
-    private static void configureFileChooser(final FileChooser fileChooser) {
-        fileChooser.setTitle("View Pictures");
+    private static void configureFileChooserSaveFormat(final FileChooser fileChooser) {
+        fileChooser.setTitle("Save output");
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All Images", "*.*"),
-                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
-                new FileChooser.ExtensionFilter("PNG", "*.png")
+        fileChooser.getExtensionFilters().setAll(
+                new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf"),
+                new FileChooser.ExtensionFilter("Word Document (*.docx)", "*.docx"),
+                new FileChooser.ExtensionFilter("Html file (*.html)", "*.html")
+        );
+    }
+
+    private static void configureFileChooserInput(final FileChooser fileChooser) {
+        fileChooser.setTitle("Input file");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        fileChooser.getExtensionFilters().setAll(
+                new FileChooser.ExtensionFilter("Any File", "*.*")
         );
     }
 }

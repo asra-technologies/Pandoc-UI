@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Pandoc.Native.Operations;
+
+import java.util.logging.ConsoleHandler;
 
 public class Main extends Application {
 
@@ -21,6 +24,11 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        if (Operations.checkForPandoc()) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
         launch(args);
     }
 }
