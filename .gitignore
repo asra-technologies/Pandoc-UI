@@ -338,3 +338,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+!/.idea/misc.xml
+!/.idea/modules.xml
+!/.idea/vcs.xml
