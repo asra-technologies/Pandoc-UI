@@ -8,11 +8,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    static protected Stage stage;
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
+        stage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Pandoc UI");
+        primaryStage.setScene(new Scene(root, 800, 450));
         primaryStage.show();
     }
 
