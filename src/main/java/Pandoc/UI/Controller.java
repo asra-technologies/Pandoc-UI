@@ -13,12 +13,10 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.Desktop;
 
 import Pandoc.Native.Operations;
 
 public class Controller {
-    private Desktop desktop = Desktop.getDesktop();
 
     final FileChooser fileChooser = new FileChooser();
 
