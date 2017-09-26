@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.awt.Desktop;
+
 import Pandoc.Native.Operations;
 
 public class Controller {
@@ -30,6 +31,16 @@ public class Controller {
 
     @FXML
     private Button convertButton;
+
+    @FXML
+    public void initialize() {
+        if (Main.arguments.length > 0) {
+            inputFile.setText(Main.arguments[0]);
+        }
+        if (Main.arguments.length > 1) {
+            outputFile.setText(Main.arguments[1]);
+        }
+    }
 
     @FXML
     protected void setInputFile(ActionEvent event) {
