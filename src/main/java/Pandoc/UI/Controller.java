@@ -10,11 +10,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
-import javax.swing.*;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import Pandoc.Native.Operations;
 
 public class Controller {
@@ -48,12 +43,9 @@ public class Controller {
     protected void setInputFile(ActionEvent event) {
         configureFileChooserInput(fileChooser);
         File file = fileChooser.showOpenDialog(Main.stage);
-        if (file != null) {
-            inputFile.setText(file.getPath());
-            inputSet = true;
-            if (outputSet) {
-                convertButton.setVisible(true);
-            }
+        if (checkIfFileExists(file)) {
+            setFilePath(false, file);
+            setConvertVisible(false);
         }
     }
 
@@ -61,12 +53,9 @@ public class Controller {
     protected void setOutputFile(ActionEvent event) {
         configureFileChooserSaveFormat(fileChooser);
         File file = fileChooser.showSaveDialog(Main.stage);
-        if (file != null) {
-            outputFile.setText(file.getPath());
-            outputSet = true;
-            if (inputSet) {
-                convertButton.setVisible(true);
-            }
+        if (checkIfFileExists(file)) {
+            setFilePath(true, file);
+            setConvertVisible(true);
         }
     }
 
@@ -96,5 +85,25 @@ public class Controller {
         fileChooser.getExtensionFilters().setAll(
                 new FileChooser.ExtensionFilter("Any File", "*.*")
         );
+    }
+
+    private boolean checkIfFileExists(File file) {
+        return file != null;
+    }
+
+    private void setFilePath(boolean isOutput, File file) {
+        if (isOutput) {
+            outputFile.setText(file.getPath());
+            outputSet = true;
+        } else {
+            inputFile.setText(file.getPath());
+            inputSet = true;
+        }
+    }
+
+    private void setConvertVisible(boolean isOutput) {
+        if (inputSet && outputSet) {
+            convertButton.setVisible(true);
+        }
     }
 }
