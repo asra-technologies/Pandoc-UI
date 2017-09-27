@@ -14,20 +14,23 @@ import Pandoc.Native.Operations;
 
 public class Controller {
 
-    final FileChooser fileChooser = new FileChooser();
-
+    /* Ui Components */
     @FXML
     private TextField inputFile;
     @FXML
     private TextField outputFile;
-    private boolean inputSet = false;
-    private boolean outputSet = false;
-
     @FXML
     private ComboBox<? extends String> outputFormat;
-
     @FXML
     private Button convertButton;
+
+    /* Controller Fields */
+    final FileChooser fileChooser = new FileChooser();
+    private boolean inputSet = false;
+    private boolean outputSet = false;
+    private boolean formatSelected = false;
+    private String extensionDescription;
+    private String extensionType;
 
     @FXML
     public void initialize() {
@@ -44,7 +47,7 @@ public class Controller {
         configureFileChooserInput(fileChooser);
         File file = fileChooser.showOpenDialog(Main.stage);
         if (checkIfFileExists(file)) {
-            setFilePath(false, file);
+            setFilePath(false, file.getPath());
             setConvertVisible(false);
         }
     }
@@ -54,14 +57,15 @@ public class Controller {
         configureFileChooserSaveFormat(fileChooser);
         File file = fileChooser.showSaveDialog(Main.stage);
         if (checkIfFileExists(file)) {
-            setFilePath(true, file);
+            setFilePath(true, file.getPath());
             setConvertVisible(true);
         }
     }
 
     @FXML
     protected void formatSelected() {
-        System.out.println("Boop" + outputFormat.getValue());
+        setOutputSaveDialogOptions(outputFormat.getValue());
+        setOutputIfNotCustom();
     }
 
     @FXML
@@ -69,13 +73,26 @@ public class Controller {
         Operations.setFileLocations(inputFile.getText(), outputFile.getText());
     }
 
-    private static void configureFileChooserSaveFormat(final FileChooser fileChooser) {
+    private void configureFileChooserSaveFormat(final FileChooser fileChooser) {
+        String filePath = outputFile.getText();
+        String outputFolder;
+        int index;
+        String fileName;
+
         fileChooser.setTitle("Save output");
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+        try {
+            index = filePath.lastIndexOf("\\");
+            outputFolder = filePath.substring(0, index);
+            fileName = filePath.substring(index + 1);
+        } catch (Exception e) {
+            index = filePath.lastIndexOf("/");
+            outputFolder = filePath.substring(0, index);
+            fileName = filePath.substring(index + 1);
+        }
+        fileChooser.setInitialDirectory(new File(outputFolder));
+        fileChooser.setInitialFileName(fileName);
         fileChooser.getExtensionFilters().setAll(
-                new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf"),
-                new FileChooser.ExtensionFilter("Word Document (*.docx)", "*.docx"),
-                new FileChooser.ExtensionFilter("Html file (*.html)", "*.html")
+                new FileChooser.ExtensionFilter(extensionDescription, extensionType)
         );
     }
 
@@ -91,12 +108,12 @@ public class Controller {
         return file != null;
     }
 
-    private void setFilePath(boolean isOutput, File file) {
+    private void setFilePath(boolean isOutput, String path) {
         if (isOutput) {
-            outputFile.setText(file.getPath());
+            outputFile.setText(path);
             outputSet = true;
         } else {
-            inputFile.setText(file.getPath());
+            inputFile.setText(path);
             inputSet = true;
         }
     }
@@ -104,6 +121,29 @@ public class Controller {
     private void setConvertVisible(boolean isOutput) {
         if (inputSet && outputSet) {
             convertButton.setVisible(true);
+        }
+    }
+
+    private void setOutputSaveDialogOptions(String format) {
+        if (format.equals("Pdf")) {
+            extensionDescription = "PDF (*.pdf)";
+            extensionType = "*.pdf";
+        } else if (format.equals("Word")) {
+            extensionDescription = "Word Document (*.docx)";
+            extensionType = "*.docx";
+        } else if (format.equals("Html")) {
+            extensionDescription = "Html file (*.html)";
+            extensionType = "*.html";
+        }
+    }
+
+    private void setOutputIfNotCustom() {
+        if (inputSet) {
+            String inputPath = inputFile.getText();
+            String output = inputPath.substring(0, inputPath.lastIndexOf("."));
+            output += extensionType.substring(1);
+            setFilePath(true, output);
+            setConvertVisible(true);
         }
     }
 }
