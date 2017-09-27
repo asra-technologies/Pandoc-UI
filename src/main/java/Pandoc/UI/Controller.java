@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import java.io.File;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -26,6 +27,9 @@ public class Controller {
     private TextField outputFile;
     private boolean inputSet = false;
     private boolean outputSet = false;
+
+    @FXML
+    private ComboBox<? extends String> outputFormat;
 
     @FXML
     private Button convertButton;
@@ -64,6 +68,11 @@ public class Controller {
                 convertButton.setVisible(true);
             }
         }
+    }
+
+    @FXML
+    protected void formatSelected() {
+        System.out.println("Boop" + outputFormat.getValue());
     }
 
     @FXML

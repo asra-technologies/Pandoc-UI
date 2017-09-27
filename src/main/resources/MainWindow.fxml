@@ -22,22 +22,23 @@
     <TextField fx:id="inputFile" GridPane.columnIndex="0" GridPane.rowIndex="1" editable="false"/>
     <Button onAction="#setInputFile" text="Set input" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <Label text="Output file" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+    <GridPane alignment="TOP_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.columnSpan="2" hgap="20">
+        <Label text="Output file" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+
+        <ComboBox fx:id="outputFormat" promptText="Select output format" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                  onAction="#formatSelected">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Pdf"/>
+                    <String fx:value="Word"/>
+                    <String fx:value="Html"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </GridPane>
 
     <TextField fx:id="outputFile" GridPane.columnIndex="2" GridPane.rowIndex="1" editable="false"/>
     <Button onAction="#setOutputFile" text="Set output" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-    <ComboBox promptText="Select output format" GridPane.columnIndex="3">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Pdf"/>
-                <String fx:value="Word"/>
-                <String fx:value="Html"/>
-            </FXCollections>
-        </items>
-        <value>
-            <String fx:value="Pdf"/>
-        </value>
-    </ComboBox>
 
     <GridPane alignment="center" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
         <Button fx:id="convertButton" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Convert" visible="false"
