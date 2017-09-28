@@ -10,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.concurrent.Task;
 
 import Pandoc.Native.Operations;
 
@@ -74,9 +75,16 @@ public class Controller {
     @FXML
     protected void convertDocument(ActionEvent event) {
         processIndicator.setVisible(true);
-        Operations.setFileLocations(inputFile.getText(), outputFile.getText());
-        Operations.executeCommand();
-        processIndicator.setVisible(false);
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                Operations.setFileLocations(inputFile.getText(), outputFile.getText());
+                Operations.executeCommand();
+                processIndicator.setVisible(false);
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     private void configureFileChooserSaveFormat(final FileChooser fileChooser) {
