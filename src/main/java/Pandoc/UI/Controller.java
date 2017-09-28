@@ -7,6 +7,7 @@ import java.io.File;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 
@@ -23,6 +24,8 @@ public class Controller {
     private ComboBox<? extends String> outputFormat;
     @FXML
     private Button convertButton;
+    @FXML
+    private ProgressIndicator processIndicator;
 
     /* Controller Fields */
     final FileChooser fileChooser = new FileChooser();
@@ -70,7 +73,10 @@ public class Controller {
 
     @FXML
     protected void convertDocument(ActionEvent event) {
+        processIndicator.setVisible(true);
         Operations.setFileLocations(inputFile.getText(), outputFile.getText());
+        Operations.executeCommand();
+        processIndicator.setVisible(false);
     }
 
     private void configureFileChooserSaveFormat(final FileChooser fileChooser) {

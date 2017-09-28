@@ -6,12 +6,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <?import javafx.scene.text.Text?>
+
 <GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/8.0.121"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="Pandoc.UI.Controller">
     <padding>
@@ -19,14 +20,14 @@
     </padding>
 
     <Label text="Input File" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <TextField fx:id="inputFile" GridPane.columnIndex="0" GridPane.rowIndex="1" editable="false"/>
+    <TextField fx:id="inputFile" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
     <Button onAction="#setInputFile" text="Set input" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
 
-    <GridPane alignment="TOP_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.columnSpan="2" hgap="20">
+    <GridPane alignment="TOP_LEFT" hgap="20" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="0">
         <Label text="Output file" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
 
-        <ComboBox fx:id="outputFormat" promptText="Select output format" GridPane.columnIndex="1" GridPane.rowIndex="0"
-                  onAction="#formatSelected">
+        <ComboBox fx:id="outputFormat" onAction="#formatSelected" promptText="Select output format"
+                  GridPane.columnIndex="1" GridPane.rowIndex="0">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Pdf"/>
@@ -35,18 +36,39 @@
                 </FXCollections>
             </items>
         </ComboBox>
+        <columnConstraints>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+        </rowConstraints>
     </GridPane>
 
-    <TextField fx:id="outputFile" GridPane.columnIndex="2" GridPane.rowIndex="1" editable="false"/>
+    <TextField fx:id="outputFile" editable="false" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
     <Button onAction="#setOutputFile" text="Set output" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
     <GridPane alignment="center" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.rowIndex="2">
-        <Button fx:id="convertButton" GridPane.rowIndex="0" GridPane.columnIndex="0" text="Convert" visible="false"
-                onAction="#convertDocument"/>
+        <Button fx:id="convertButton" onAction="#convertDocument" text="Convert" visible="false"
+                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <ProgressIndicator fx:id="processIndicator" progress="-1.0" visible="false" GridPane.columnIndex="1"/>
+        <columnConstraints>
+            <ColumnConstraints/>
+            <ColumnConstraints/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+        </rowConstraints>
     </GridPane>
 
     <GridPane alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="3">
         <Text text="Bla bla bla"/>
+        <columnConstraints>
+            <ColumnConstraints/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints/>
+        </rowConstraints>
     </GridPane>
 
     <columnConstraints>
