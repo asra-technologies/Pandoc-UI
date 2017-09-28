@@ -7,10 +7,13 @@ import java.io.File;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
+import javafx.concurrent.Task;
 
 import Pandoc.Native.Operations;
+import Pandoc.Types.Format;
 
 public class Controller {
 
@@ -23,6 +26,8 @@ public class Controller {
     private ComboBox<? extends String> outputFormat;
     @FXML
     private Button convertButton;
+    @FXML
+    private ProgressIndicator processIndicator;
 
     /* Controller Fields */
     final FileChooser fileChooser = new FileChooser();
@@ -49,6 +54,7 @@ public class Controller {
         if (checkIfFileExists(file)) {
             setFilePath(false, file.getPath());
             setConvertVisible(false);
+            setInputType(file.getPath());
         }
     }
 
@@ -70,7 +76,17 @@ public class Controller {
 
     @FXML
     protected void convertDocument(ActionEvent event) {
-        Operations.setFileLocations(inputFile.getText(), outputFile.getText());
+        processIndicator.setVisible(true);
+
+        Task task = new Task<Void>() {
+            @Override public Void call() {
+                Operations.setFileLocations(inputFile.getText(), outputFile.getText());
+                Operations.executeCommand();
+                processIndicator.setVisible(false);
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
 
     private void configureFileChooserSaveFormat(final FileChooser fileChooser) {
@@ -128,6 +144,7 @@ public class Controller {
         if (format.equals("Pdf")) {
             extensionDescription = "PDF (*.pdf)";
             extensionType = "*.pdf";
+            Operations.setOutputFormat(Format.PDF);
         } else if (format.equals("Word")) {
             extensionDescription = "Word Document (*.docx)";
             extensionType = "*.docx";
@@ -144,6 +161,13 @@ public class Controller {
             output += extensionType.substring(1);
             setFilePath(true, output);
             setConvertVisible(true);
+        }
+    }
+
+    private void setInputType(String path) {
+        String inputExtension = path.substring(path.lastIndexOf(".") + 1);
+        if (inputExtension.equalsIgnoreCase("md")) {
+            Operations.setInputFormat(Format.MARKDOWN);
         }
     }
 }

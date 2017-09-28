@@ -10,15 +10,22 @@ import Pandoc.Native.Operations;
 public class Main extends Application {
 
     static protected Stage stage;
+    private static boolean isPandocFound;
 
     public static String[] arguments;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("/MainWindow.fxml"));
-        primaryStage.setTitle("Pandoc UI");
-        primaryStage.setScene(new Scene(root, 800, 450));
+        if (isPandocFound) {
+            Parent root = FXMLLoader.load(getClass().getResource("/MainWindow.fxml"));
+            primaryStage.setTitle("Pandoc UI");
+            primaryStage.setScene(new Scene(root, 800, 450));
+        } else {
+            Parent root = FXMLLoader.load(getClass().getResource("/Error.fxml"));
+            primaryStage.setTitle("Pandoc UI - Error");
+            primaryStage.setScene(new Scene(root, 600, 200));
+        }
         primaryStage.show();
     }
 
@@ -26,9 +33,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         arguments = args;
         if (Operations.checkForPandoc()) {
-            System.out.println("true");
+            isPandocFound = true;
         } else {
-            System.out.println("false");
+            isPandocFound = false;
         }
         launch(args);
     }
