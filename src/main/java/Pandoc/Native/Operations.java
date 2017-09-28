@@ -1,17 +1,27 @@
 package Pandoc.Native;
 
+import Pandoc.Types.Format;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.lang.Process;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Operations {
     private static String inputPath;
     private static String outputPath;
     private static String args;
+    private static Format inputFormat;
+    private static Format outputFormat;
+
+    public static void setInputFormat(Format format) {
+        inputFormat = format;
+    }
+
+    public static void setOutputFormat(Format format) {
+        outputFormat = format;
+    }
 
     public static boolean checkForPandoc() {
         try {
@@ -55,8 +65,21 @@ public class Operations {
         command.add("pandoc");
         command.add("-s");
         command.add(inputPath);
+        command = addArgsToCommand(command);
         command.add("-o");
         command.add(outputPath);
+        return command;
+    }
+
+    private static ArrayList<String> addArgsToCommand(ArrayList<String> command) {
+        if (inputFormat == Format.MARKDOWN && outputFormat == Format.PDF) {
+            command.add("-V");
+            command.add("geometry:letterpaper");
+            command.add("-V");
+            command.add("geometry:margin=3cm");
+            command.add("-V");
+            command.add("fontsize=12pt");
+        }
         return command;
     }
 }

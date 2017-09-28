@@ -62,7 +62,7 @@
     </GridPane>
 
     <GridPane alignment="center" GridPane.columnIndex="0" GridPane.rowIndex="3">
-        <Text text="Bla bla bla"/>
+        <Text text=""/>
         <columnConstraints>
             <ColumnConstraints/>
         </columnConstraints>

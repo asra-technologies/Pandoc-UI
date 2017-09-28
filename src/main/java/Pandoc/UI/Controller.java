@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.concurrent.Task;
 
 import Pandoc.Native.Operations;
+import Pandoc.Types.Format;
 
 public class Controller {
 
@@ -53,6 +54,7 @@ public class Controller {
         if (checkIfFileExists(file)) {
             setFilePath(false, file.getPath());
             setConvertVisible(false);
+            setInputType(file.getPath());
         }
     }
 
@@ -142,6 +144,7 @@ public class Controller {
         if (format.equals("Pdf")) {
             extensionDescription = "PDF (*.pdf)";
             extensionType = "*.pdf";
+            Operations.setOutputFormat(Format.PDF);
         } else if (format.equals("Word")) {
             extensionDescription = "Word Document (*.docx)";
             extensionType = "*.docx";
@@ -158,6 +161,13 @@ public class Controller {
             output += extensionType.substring(1);
             setFilePath(true, output);
             setConvertVisible(true);
+        }
+    }
+
+    private void setInputType(String path) {
+        String inputExtension = path.substring(path.lastIndexOf(".") + 1);
+        if (inputExtension.equalsIgnoreCase("md")) {
+            Operations.setInputFormat(Format.MARKDOWN);
         }
     }
 }
