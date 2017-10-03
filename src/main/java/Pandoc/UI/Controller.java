@@ -148,9 +148,15 @@ public class Controller {
         } else if (format.equals("Word")) {
             extensionDescription = "Word Document (*.docx)";
             extensionType = "*.docx";
+            Operations.setOutputFormat(Format.WORD);
         } else if (format.equals("Html")) {
             extensionDescription = "Html file (*.html)";
             extensionType = "*.html";
+            Operations.setOutputFormat(Format.HTML);
+        } else if (format.equals("Markdown")) {
+            extensionDescription = "Markdown (*.md)";
+            extensionType = "*.md";
+            Operations.setOutputFormat(Format.MARKDOWN);
         }
     }
 
@@ -168,6 +174,8 @@ public class Controller {
         String inputExtension = path.substring(path.lastIndexOf(".") + 1);
         if (inputExtension.equalsIgnoreCase("md")) {
             Operations.setInputFormat(Format.MARKDOWN);
+        } else if (inputExtension.equalsIgnoreCase("docx")) {
+            Operations.setInputFormat(Format.WORD);
         }
     }
 }
