@@ -1,6 +1,8 @@
 package Pandoc.Native;
 
 import Pandoc.Types.Format;
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import sun.misc.FormattedFloatingDecimal;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -79,6 +81,8 @@ public class Operations {
             command.add("geometry:margin=3cm");
             command.add("-V");
             command.add("fontsize=12pt");
+        } else if (inputFormat == Format.WORD && outputFormat == Format.MARKDOWN) {
+            command.add("--wrap=none");
         }
         return command;
     }
