@@ -25,6 +25,7 @@ namespace Pandoc_UI
         public MainWindow()
         {
             InitializeComponent();
+            Native.CheckIfPandocPresent();
         }
 
         private void SetInputFile(object sender, RoutedEventArgs e)
