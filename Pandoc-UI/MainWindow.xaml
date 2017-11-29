@@ -11,23 +11,24 @@
             <RowDefinition Height="26"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="22"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="90"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="90"/>
         </Grid.ColumnDefinitions>
         
         <!--Switch text box for file pickers and remove the set button-->
         
         <Label Grid.Row="0" Grid.Column="0"  Content="Input file"></Label>
         <TextBox Grid.Row="2" Grid.Column="0" x:Name="InputFile"/>
-        <Button Grid.Row="2" Grid.Column="2" Content="Set input" Click="SetInputFile"/>
+        <Button Grid.Row="2" Grid.Column="2" Content="Select input file" Click="SetInputFile"/>
 
         <Label Grid.Row="0" Grid.Column="4"  Content="Output file"></Label>
         <!--<Label Grid.Row="0" Grid.Column="6" Content="Output format"/>-->
@@ -38,6 +39,9 @@
             <ComboBoxItem Content="Html"/>
         </ComboBox>
         <TextBox Grid.Row="2" Grid.Column="4" x:Name="OutputFile"/>
-        <Button Grid.Row="2" Grid.Column="6" Content="Set output" Click="SetOutputFile"/>
+        <Button Grid.Row="2" Grid.Column="6" Content="Save output" Click="SetOutputFile"/>
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="7" HorizontalAlignment="Stretch">
+            <Button x:Name="ConvertFileButton" Content="Convert file" HorizontalAlignment="Center" MinHeight="22" MinWidth="70" Visibility="Hidden" Click="PandocConvert" />
+        </StackPanel>
     </Grid>
 </Window>

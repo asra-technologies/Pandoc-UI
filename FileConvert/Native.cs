@@ -11,6 +11,23 @@ namespace FileConvert
     {
         private List<Tuple<PandocFile, PandocFile>> files;
 
+        private static Native instance;
+        public PandocFile Input { get; set; }
+        public PandocFile Output { get; set; }
+
+        public static Native Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Native();
+                }
+                return instance;
+            }
+            private set { }
+        }
+
         public Native()
         {
             files = new List<Tuple<PandocFile, PandocFile>>();
@@ -58,6 +75,12 @@ namespace FileConvert
         public int GetFileCount()
         {
             return files.Count;
+        }
+
+        public void SetFiles()
+        {
+            Tuple<PandocFile, PandocFile> simple = new Tuple<PandocFile, PandocFile>(Input, Output);
+            this.files.Add(simple);
         }
     }
 }
