@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pandoc_UI"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Margin="20,20,20,20">
@@ -40,8 +41,9 @@
         </ComboBox>
         <TextBox Grid.Row="2" Grid.Column="4" x:Name="OutputFile"/>
         <Button Grid.Row="2" Grid.Column="6" Content="Save output" Click="SetOutputFile"/>
-        <StackPanel Grid.Row="4" Grid.ColumnSpan="7" HorizontalAlignment="Stretch">
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="7" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
             <Button x:Name="ConvertFileButton" Content="Convert file" HorizontalAlignment="Center" MinHeight="22" MinWidth="70" Visibility="Hidden" Click="PandocConvert" />
+            <fa:ImageAwesome x:Name="ConvertSpinner" Visibility="Hidden" Icon="CircleOutlineNotch" Spin="True" SpinDuration="5" Height="22" Margin="10,0,0,0"/>
         </StackPanel>
     </Grid>
 </Window>

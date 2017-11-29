@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FileConvert;
+using System.ComponentModel;
 
 namespace Pandoc_UI
 {
@@ -111,8 +112,23 @@ namespace Pandoc_UI
 
         private void PandocConvert(object sender, RoutedEventArgs e)
         {
+
+            ConvertSpinner.Visibility = Visibility.Visible;
+            BackgroundWorker backgroundWorker = new BackgroundWorker();
+            backgroundWorker.DoWork += DoBackgroundWork;
+            backgroundWorker.RunWorkerCompleted += BackgroundTaskDone;
+            backgroundWorker.RunWorkerAsync();
+        }
+
+        void DoBackgroundWork(object sender, DoWorkEventArgs e)
+        {
             Native.Instance.SetFiles();
             Native.Instance.ConvertFiles();
+        }
+
+        void BackgroundTaskDone(object sender, RunWorkerCompletedEventArgs e)
+        {
+            ConvertSpinner.Visibility = Visibility.Hidden;
         }
     }
 }
