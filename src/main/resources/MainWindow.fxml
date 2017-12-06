@@ -33,6 +33,7 @@
                     <String fx:value="Pdf"/>
                     <String fx:value="Word"/>
                     <String fx:value="Html"/>
+                    <String fx:value="Markdown"/>
                 </FXCollections>
             </items>
         </ComboBox>
