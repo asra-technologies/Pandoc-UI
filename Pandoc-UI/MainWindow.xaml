@@ -37,7 +37,9 @@
         <!--Switch text box for file pickers and remove the set button-->
 
         <Label Grid.Row="0" Grid.Column="0"  Content="Input file"></Label>
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="InputFile"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+            <TextBox x:Name="InputFile"/>
+        </StackPanel>
         <Button Grid.Row="2" Grid.Column="2" Content="Select input file" Click="SetInputFile"/>
 
         <Label Grid.Row="0" Grid.Column="4"  Content="Output file"></Label>
@@ -48,7 +50,9 @@
             <ComboBoxItem Content="Word"/>
             <ComboBoxItem Content="Html"/>
         </ComboBox>
-        <TextBox Grid.Row="2" Grid.Column="4" x:Name="OutputFile"/>
+        <StackPanel Grid.Row="2" Grid.Column="4" VerticalAlignment="Center">
+            <TextBox x:Name="OutputFile"/>
+        </StackPanel>
         <Button Grid.Row="2" Grid.Column="6" Content="Save output" Click="SetOutputFile"/>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="7" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
             <Button x:Name="ConvertFileButton" Content="Convert file" HorizontalAlignment="Center" Visibility="Hidden" Click="PandocConvert"/>
