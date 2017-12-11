@@ -31,6 +31,19 @@ namespace Pandoc_UI
             {
                 Environment.Exit(1);
             }
+            InitializePresetList();
+        }
+
+        private void InitializePresetList()
+        {
+            Settings settings = new Settings(true, null);
+            PresetList.Items.Clear();
+            foreach (string item in settings.OutputFolder)
+            {
+                ListViewItem listItem = new ListViewItem();
+                listItem.Content = item;
+                PresetList.Items.Add(listItem);
+            }
         }
 
         private void SetInputFile(object sender, RoutedEventArgs e)
@@ -53,7 +66,7 @@ namespace Pandoc_UI
                 string filename = dlg.FileName;
                 InputFile.Text = filename;
                 Native.Instance.Input = new PandocFile(filename, System.IO.Path.GetExtension(filename));
-                if(Native.Instance.Output != null)
+                if (Native.Instance.Output != null)
                 {
                     ConvertFileButton.Visibility = Visibility.Visible;
                 }
