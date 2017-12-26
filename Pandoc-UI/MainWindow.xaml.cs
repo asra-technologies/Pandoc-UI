@@ -22,6 +22,8 @@ namespace Pandoc_UI
     /// </summary>
     public partial class MainWindow
     {
+        private Settings AppSettings;
+
         private string OutputExtension;
         private string OutputFormat;
         public MainWindow()
@@ -31,17 +33,31 @@ namespace Pandoc_UI
             {
                 Environment.Exit(1);
             }
+            AppSettings = new Settings(true, new string[] { string.Empty });
             InitializePresetList();
         }
 
         private void InitializePresetList()
         {
-            Settings settings = new Settings(true, null);
             PresetList.Items.Clear();
-            foreach (string item in settings.OutputFolder)
+            foreach (Preset item in AppSettings.PresetList)
             {
+                // Content
+                Label text = new Label();
+                text.Content = item.InputFolder;
+                Label text2 = new Label();
+                text2.Content = System.IO.Path.GetFileName(item.InputFolder);
+
+                // Pannel
+                StackPanel pannel = new StackPanel();
+                pannel.Orientation = Orientation.Horizontal;
+                pannel.Children.Add(text2);
+                pannel.Children.Add(text);
+
+                //listItem.Content = item;
+                // List
                 ListViewItem listItem = new ListViewItem();
-                listItem.Content = item;
+                listItem.Content = pannel;
                 PresetList.Items.Add(listItem);
             }
         }

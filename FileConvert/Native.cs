@@ -33,6 +33,12 @@ namespace FileConvert
             files = new List<Tuple<PandocFile, PandocFile>>();
         }
 
+        public Native(Preset[] presetList, int selectedOutput) : this(
+            presetList[selectedOutput].InputFolder, 
+            presetList[selectedOutput].InputFormat, 
+            presetList[selectedOutput].OutputFolder, 
+            presetList[selectedOutput].OutputFormat) { }
+
         public Native(string pathToScan, string inputFormat, string outputFolder, string outputFormat) : this()
         {
             string[] list = Directory.GetFiles(pathToScan, "*" + inputFormat, SearchOption.AllDirectories);

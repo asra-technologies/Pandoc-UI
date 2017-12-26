@@ -40,8 +40,7 @@ namespace FileConvert
 
         public static void SetUpNative()
         {
-            Tuple<string, string> folders = AppSettings.GetSelectedFolders();
-            Pandoc = new Native(folders.Item1, AppSettings.InputFormat, folders.Item2, AppSettings.OutputFormat);
+            Pandoc = new Native(AppSettings.PresetList, AppSettings.SelectedOutput);
         }
 
         public static void CheckForPandoc()
