@@ -44,15 +44,18 @@ namespace Pandoc_UI
             {
                 // Content
                 Label text = new Label();
-                text.Content = item.InputFolder;
+                text.Content = item.Name;
                 Label text2 = new Label();
-                text2.Content = System.IO.Path.GetFileName(item.InputFolder);
+                text2.Content = "Input folder : " + System.IO.Path.GetFileName(item.InputFolder);
+                Label text3 = new Label();
+                text3.Content = "Output folder : " + System.IO.Path.GetFileName(item.OutputFolder);
 
                 // Pannel
                 StackPanel pannel = new StackPanel();
                 pannel.Orientation = Orientation.Horizontal;
-                pannel.Children.Add(text2);
                 pannel.Children.Add(text);
+                pannel.Children.Add(text2);
+                pannel.Children.Add(text3);
 
                 //listItem.Content = item;
                 // List
