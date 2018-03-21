@@ -22,6 +22,7 @@
             <RowDefinition Height="5"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -37,7 +38,9 @@
         <!--Switch text box for file pickers and remove the set button-->
 
         <Label Grid.Row="0" Grid.Column="0"  Content="Input file"></Label>
-        <TextBox Grid.Row="2" Grid.Column="0" x:Name="InputFile"/>
+        <StackPanel Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">
+            <TextBox x:Name="InputFile"/>
+        </StackPanel>
         <Button Grid.Row="2" Grid.Column="2" Content="Select input file" Click="SetInputFile"/>
 
         <Label Grid.Row="0" Grid.Column="4"  Content="Output file"></Label>
@@ -48,11 +51,22 @@
             <ComboBoxItem Content="Word"/>
             <ComboBoxItem Content="Html"/>
         </ComboBox>
-        <TextBox Grid.Row="2" Grid.Column="4" x:Name="OutputFile"/>
+        <StackPanel Grid.Row="2" Grid.Column="4" VerticalAlignment="Center">
+            <TextBox x:Name="OutputFile"/>
+        </StackPanel>
         <Button Grid.Row="2" Grid.Column="6" Content="Save output" Click="SetOutputFile"/>
         <StackPanel Grid.Row="4" Grid.ColumnSpan="7" HorizontalAlignment="Center" VerticalAlignment="Top" Orientation="Horizontal">
             <Button x:Name="ConvertFileButton" Content="Convert file" HorizontalAlignment="Center" Visibility="Hidden" Click="PandocConvert"/>
             <Controls:ProgressRing x:Name="ConvertSpinner" Visibility="Hidden" Grid.Column="2" Margin="10,0,0,0" Width="26" Height="26" />
         </StackPanel>
+
+        <StackPanel Grid.Row="5" Grid.ColumnSpan="7">
+            <ListView x:Name="PresetList" HorizontalAlignment="Stretch" Height="100" Margin="0,5,0,0" VerticalAlignment="Top">
+                <ListViewItem Content="Test1"/>
+                <ListViewItem Content="Test2"/>
+                <ListViewItem Content="Test3"/>
+            </ListView>
+        </StackPanel>
+
     </Grid>
 </Controls:MetroWindow>

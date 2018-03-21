@@ -28,14 +28,14 @@ namespace FileConvert
             Console.WriteLine("Settings saved successfully!");
         }
 
-        public static void MultiplePresets(string[] inputFolder, string[] outputFolder)
+        public static void MultiplePresets(Preset[] list)
         {
             Console.WriteLine("Multiple outputs folders defined, select one:");
-            for (int i = 0; i < outputFolder.Length; i++)
+            for (int i = 0; i < list.Length; i++)
             {
-                Console.WriteLine((i + 1) + ". Input: " + inputFolder[i] + ", Output: " + outputFolder[i]);
+                Console.WriteLine((i + 1) + ". Input: " + list[i].InputFolder + ", Output: " + list[i].OutputFolder);
             }
-            Console.Write("Select between 1 and " + outputFolder.Length + " : ");
+            Console.Write("Select between 1 and " + list.Length + " : ");
         }
 
         public static void SetInputFormat()

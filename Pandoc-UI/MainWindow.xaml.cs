@@ -22,6 +22,8 @@ namespace Pandoc_UI
     /// </summary>
     public partial class MainWindow
     {
+        private Settings AppSettings;
+
         private string OutputExtension;
         private string OutputFormat;
         public MainWindow()
@@ -30,6 +32,36 @@ namespace Pandoc_UI
             if (!Native.TestPandocPresent())
             {
                 Environment.Exit(1);
+            }
+            AppSettings = new Settings(true, new string[] { string.Empty });
+            InitializePresetList();
+        }
+
+        private void InitializePresetList()
+        {
+            PresetList.Items.Clear();
+            foreach (Preset item in AppSettings.PresetList)
+            {
+                // Content
+                Label text = new Label();
+                text.Content = item.Name;
+                Label text2 = new Label();
+                text2.Content = "Input folder : " + System.IO.Path.GetFileName(item.InputFolder);
+                Label text3 = new Label();
+                text3.Content = "Output folder : " + System.IO.Path.GetFileName(item.OutputFolder);
+
+                // Pannel
+                StackPanel pannel = new StackPanel();
+                pannel.Orientation = Orientation.Horizontal;
+                pannel.Children.Add(text);
+                pannel.Children.Add(text2);
+                pannel.Children.Add(text3);
+
+                //listItem.Content = item;
+                // List
+                ListViewItem listItem = new ListViewItem();
+                listItem.Content = pannel;
+                PresetList.Items.Add(listItem);
             }
         }
 
@@ -53,7 +85,7 @@ namespace Pandoc_UI
                 string filename = dlg.FileName;
                 InputFile.Text = filename;
                 Native.Instance.Input = new PandocFile(filename, System.IO.Path.GetExtension(filename));
-                if(Native.Instance.Output != null)
+                if (Native.Instance.Output != null)
                 {
                     ConvertFileButton.Visibility = Visibility.Visible;
                 }

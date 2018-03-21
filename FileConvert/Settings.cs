@@ -10,12 +10,9 @@ namespace FileConvert
 {
     public class Settings
     {
-        private readonly static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Asra-Notion\FileConvert\settings.xml";
-        public string InputFormat { get; set; }
-        public string OutputFormat { get; set; }
-        public string[] InputFolder { get; set; }
+        private readonly static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Asra-Notion\Pandoc-UI\settings.xml";
+        public Preset[] PresetList { get; set; }
         public bool UseOutputFolder { get; set; }
-        public string[] OutputFolder { get; set; }
         public int SelectedOutput { get; set; }
         public bool PromptSave { get; set; }
 
@@ -24,10 +21,7 @@ namespace FileConvert
         /// </summary>
         public Settings()
         {
-            InputFormat = string.Empty;
-            OutputFormat = string.Empty;
-            InputFolder = new string[] { string.Empty };
-            OutputFolder = new string[] { string.Empty };
+            PresetList = new Preset[] { new Preset() { Name = "default", InputFolder = "", InputFormat = "", OutputFolder = "", OutputFormat = "" } };
             SelectedOutput = -1;
             PromptSave = true;
         }
@@ -42,18 +36,10 @@ namespace FileConvert
             if (useUserSettings && File.Exists(SettingsPath))
             {
                 Settings fromFile = XmlHelper.FromXmlFile<Settings>(SettingsPath);
-                this.InputFormat = fromFile.InputFormat;
-                this.OutputFormat = fromFile.OutputFormat;
-                this.InputFolder = fromFile.InputFolder;
                 this.UseOutputFolder = fromFile.UseOutputFolder;
-                this.OutputFolder = fromFile.OutputFolder;
                 this.SelectedOutput = fromFile.SelectedOutput;
                 this.PromptSave = fromFile.PromptSave;
-                if (InputFolder.Length != OutputFolder.Length)
-                {
-                    this.InputFolder = new string[] { string.Empty };
-                    this.OutputFolder = new string[] { string.Empty };
-                }
+                this.PresetList = fromFile.PresetList;
             }
             else
             {
@@ -63,7 +49,7 @@ namespace FileConvert
 
         private void ParseArguments(string[] args)
         {
-            InputFolder[0] = Environment.CurrentDirectory;
+            PresetList[0].InputFolder = Environment.CurrentDirectory;
             UseOutputFolder = true;
             for (int i = 0; i < args.Length; i++)
             {
@@ -71,16 +57,16 @@ namespace FileConvert
                 {
                     case "-i":
                         i++;
-                        InputFormat = args[i];
+                        PresetList[0].InputFormat = args[i];
                         break;
                     case "-f":
                         i++;
-                        OutputFolder = new string[] { args[i] };
+                        PresetList[0].OutputFolder = args[i];
                         SelectedOutput = 0;
                         break;
                     case "-o":
                         i++;
-                        OutputFormat = args[i];
+                        PresetList[0].OutputFormat = args[i];
                         break;
                     default:
                         break;
@@ -96,15 +82,15 @@ namespace FileConvert
 
         public void SelectOutput()
         {
-            if (OutputFolder.Length > 1)
+            if (PresetList.Length > 1)
             {
-                Display.MultiplePresets(InputFolder, OutputFolder);
+                Display.MultiplePresets(PresetList);
                 string selection = Console.ReadLine();
                 int temp = int.Parse(selection) - 1;
-                if (temp >= 0 && temp < OutputFolder.Length)
+                if (temp >= 0 && temp < PresetList.Length)
                 {
                     SelectedOutput = temp;
-                    Console.WriteLine("Selected Option : " + InputFolder[SelectedOutput] + ", " + OutputFolder[SelectedOutput]);
+                    Console.WriteLine("Selected Option : " + PresetList[SelectedOutput].InputFolder + ", " + PresetList[SelectedOutput].OutputFolder);
                 }
             }
             else
@@ -115,32 +101,32 @@ namespace FileConvert
 
         public bool AreSettingsSet()
         {
-            return (InputFormat != string.Empty && OutputFolder[0] == string.Empty && OutputFormat != string.Empty);
+            return (PresetList[0].InputFormat != string.Empty && PresetList[0].OutputFolder == string.Empty && PresetList[0].OutputFormat != string.Empty);
         }
 
         public void SetMissingSettings()
         {
-            if (InputFormat == string.Empty)
+            if (PresetList[0].InputFormat == string.Empty)
             {
                 Display.SetInputFormat();
-                InputFormat = Console.ReadLine();
+                PresetList[0].InputFormat = Console.ReadLine();
             }
-            if (OutputFolder[0] == string.Empty)
+            if (PresetList[0].OutputFolder == string.Empty)
             {
                 Display.SetOutputFolder();
-                OutputFolder[0] = Console.ReadLine();
+                PresetList[0].OutputFolder = Console.ReadLine();
             }
-            if (OutputFormat == string.Empty)
+            if (PresetList[0].OutputFormat == string.Empty)
             {
                 Display.SetOutputFormat();
-                OutputFormat = Console.ReadLine();
+                PresetList[0].OutputFormat = Console.ReadLine();
             }
         }
 
         public Tuple<string, string> GetSelectedFolders()
         {
-            string input = InputFolder[SelectedOutput];
-            string output = OutputFolder[SelectedOutput];
+            string input = PresetList[SelectedOutput].InputFolder;
+            string output = PresetList[SelectedOutput].OutputFolder;
             return new Tuple<string, string>(input, output);
         }
     }
