@@ -6,9 +6,9 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:Pandoc_UI"
         mc:Ignorable="d"
-        WindowTitleBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-        GlowBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
-        Title="MainWindow" Height="450" Width="800">
+        WindowTitleBrush="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+        GlowBrush="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"
+        Title="Pandoc UI" Height="450" Width="800">
 
 
     <Controls:MetroWindow.WindowButtonCommands>

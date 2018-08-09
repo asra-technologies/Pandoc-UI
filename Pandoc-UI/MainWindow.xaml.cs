@@ -52,6 +52,7 @@ namespace Pandoc_UI
 
                 // Pannel
                 StackPanel pannel = new StackPanel();
+                pannel.Name = item.Name;
                 pannel.Orientation = Orientation.Horizontal;
                 pannel.Children.Add(text);
                 pannel.Children.Add(text2);
@@ -61,6 +62,7 @@ namespace Pandoc_UI
                 // List
                 ListViewItem listItem = new ListViewItem();
                 listItem.Content = pannel;
+                listItem.Selected += PresetSelected;
                 PresetList.Items.Add(listItem);
             }
         }
@@ -161,6 +163,13 @@ namespace Pandoc_UI
         void BackgroundTaskDone(object sender, RunWorkerCompletedEventArgs e)
         {
             ConvertSpinner.Visibility = Visibility.Hidden;
+        }
+
+        private void PresetSelected(object sender, RoutedEventArgs e)
+        {
+            ListViewItem selected = (ListViewItem)sender;
+            StackPanel panel = (StackPanel)selected.Content;
+            // TODO : Handle preset selection and do something
         }
     }
 }
